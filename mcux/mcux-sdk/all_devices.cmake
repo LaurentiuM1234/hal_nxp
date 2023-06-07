@@ -1683,6 +1683,7 @@ if(${MCUX_DEVICE} STREQUAL "MIMX8ML8_ca53")
 
 endif()
 
+
 if(${MCUX_DEVICE} STREQUAL "LPC55S14")
     list(APPEND CMAKE_MODULE_PATH
         ${CMAKE_CURRENT_LIST_DIR}/devices/LPC55S14
@@ -1881,12 +1882,30 @@ if(${MCUX_DEVICE} STREQUAL "LPC812")
 
 endif()
 
+if(${MCUX_DEVICE} STREQUAL "MIMX8QM6")
+    list(APPEND CMAKE_MODULE_PATH
+        ${CMAKE_CURRENT_LIST_DIR}/devices/MIMX8QM6
+    )
+
+    include(all_lib_device_MIMX8QM6)
+
+endif()
+
 if(${MCUX_DEVICE} STREQUAL "MIMX8QM6_cm4_core0")
     list(APPEND CMAKE_MODULE_PATH
         ${CMAKE_CURRENT_LIST_DIR}/devices/MIMX8QM6
     )
 
     include(all_lib_device_MIMX8QM6_cm4_core0)
+
+endif()
+
+if(${MCUX_DEVICE} STREQUAL "MIMX8QM6_ca53")
+    list(APPEND CMAKE_MODULE_PATH
+        ${CMAKE_CURRENT_LIST_DIR}/devices/MIMX8QM6
+    )
+
+    include(all_lib_device_MIMX8QM6_ca53)
 
 endif()
 
