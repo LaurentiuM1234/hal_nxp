@@ -190,6 +190,8 @@ uint32_t CLOCK_GetCoreSysClkFreq(void)
     err = sc_pm_get_clock_rate(ipcHandle, SC_R_M4_1_PID0, SC_PM_CLK_PER, &freq);
 #elif defined(CONFIG_SOC_MIMX8QM_A53)
     err = sc_pm_get_clock_rate(ipcHandle, SC_R_A53, SC_PM_CLK_PER, &freq);
+#elif defined(CONFIG_SOC_MIMX8QM_ADSP)
+    err = sc_pm_get_clock_rate(ipcHandle, SC_R_DSP, SC_PM_CLK_PER, &freq);
 #else
 #error "Clock driver not support the core!"
 #endif

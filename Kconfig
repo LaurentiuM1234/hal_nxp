@@ -1,0 +1,5 @@
+# Copyright 2023
+# SPDX-License-Identifier: Apache-2.0
+
+config SOME_NAME_HERE
+	default y
