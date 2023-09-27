@@ -436,7 +436,7 @@
 /* SAI module features */
 
 /* @brief Receive/transmit FIFO size in item count (register bit fields TCSR[FRDE], TCSR[FRIE], TCSR[FRF], TCR1[TFW], RCSR[FRDE], RCSR[FRIE], RCSR[FRF], RCR1[RFW], registers TFRn, RFRn). */
-#define FSL_FEATURE_SAI_FIFO_COUNT (64)
+#define FSL_FEATURE_SAI_FIFO_COUNTn(base) (64)
 /* @brief Receive/transmit channel number (register bit fields TCR3[TCE], RCR3[RCE], registers TDRn and RDRn). */
 #define FSL_FEATURE_SAI_CHANNEL_COUNTn(x) \
     (((x) == AUDIO__SAI0) ? (1) : \
@@ -455,6 +455,9 @@
 #define FSL_FEATURE_SAI_HAS_FIFO_PACKING (1)
 /* @brief Configures when the SAI will continue transmitting after a FIFO error has been detected (register bit fields TCR4[FCONT], RCR4[FCONT]). */
 #define FSL_FEATURE_SAI_HAS_FIFO_FUNCTION_AFTER_ERROR (1)
+
+#define FSL_FEATURE_SAI_HAS_FIFO (1)
+
 /* @brief Configures if the frame sync is generated internally, a frame sync is only generated when the FIFO warning flag is clear or continuously (register bit fields TCR4[ONDEM], RCR4[ONDEM]). */
 #define FSL_FEATURE_SAI_HAS_ON_DEMAND_MODE (1)
 /* @brief Simplified bit clock source and asynchronous/synchronous mode selection (register bit fields TCR2[CLKMODE], RCR2[CLKMODE]), in comparison with the exclusively implemented TCR2[SYNC,BCS,BCI,MSEL], RCR2[SYNC,BCS,BCI,MSEL]. */
