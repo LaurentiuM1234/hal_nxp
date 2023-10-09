@@ -132,27 +132,39 @@ void IRQSTEER_Deinit(IRQSTEER_Type *base)
  */
 IRQn_Type IRQSTEER_GetMasterNextInterrupt(IRQSTEER_Type *base, irqsteer_int_master_t intMasterIndex)
 {
-    uint32_t regIndex = (uint32_t)FSL_FEATURE_IRQSTEER_CHn_MASK_COUNT - 1U - ((uint32_t)intMasterIndex) * 2U;
-    uint32_t bitOffset;
-    uint32_t irqNum;
+    uint32_t bitOffset, regIndex, chanStatus, sliceNum;
+    int i, j;
 
-    bitOffset = __CLZ(__RBIT(base->CHn_STATUS[regIndex]));
-    /* When no result found, continue the loop to parse the next CHn_STATUS register. */
-    if (IRQSTEER_INT_SRC_REG_WIDTH == bitOffset)
-    {
-        regIndex--;
-        bitOffset = __CLZ(__RBIT(base->CHn_STATUS[regIndex]));
+    sliceNum = IRQSTEER_GetMasterIrqCount(base, intMasterIndex) / IRQSTEER_INT_SRC_REG_WIDTH - 1;
+
+    for (i = 0; i <= sliceNum; i++) {
+        bitOffset = 0;
+
+	/* compute the index of the register to be queried */
+	regIndex = FSL_FEATURE_IRQSTEER_CHn_MASK_COUNT - 1 - intMasterIndex * 2 + i;
+
+	/* get the register's value */
+	chanStatus = base->CHn_STATUS[regIndex];
+
+#ifndef FSL_SDK_CPU_CORTEX_M
+	for (j = 0; j < IRQSTEER_INT_SRC_REG_WIDTH; j++) {
+            if (chanStatus & 1U) {
+		    return IRQSTEER_INT_SRC_NUM(regIndex, bitOffset);
+	    }
+
+	    bitOffset++;
+	    chanStatus = chanStatus >> 1U;
+	}
+#else
+	bitOffset = __CLZ(__RBIT(chanStatus));
+
+	if (bitOffset) {
+            return IRQSTEER_INT_SRC_NUM(regIndex, bitOffset);
+	}
+#endif /* FSL_SDK_CPU_CORTEX_M */
     }
 
-    if (IRQSTEER_INT_SRC_REG_WIDTH == bitOffset)
-    {
-        return NotAvail_IRQn;
-    }
-    else
-    {
-        irqNum = (uint32_t)IRQSTEER_INT_SRC_NUM(regIndex, bitOffset) + (uint32_t)FSL_FEATURE_IRQSTEER_IRQ_START_INDEX;
-        return (IRQn_Type)irqNum;
-    }
+    return NotAvail_IRQn;
 }
 
 #ifdef FSL_SDK_CPU_CORTEX_M
