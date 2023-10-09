@@ -39,8 +39,10 @@ static IRQSTEER_Type *const s_irqsteerBases[] = IRQSTEER_BASE_PTRS;
 /*! @brief Array to map IRQSTEER instance number to clock name. */
 static const clock_ip_name_t s_irqsteerClockName[] = IRQSTEER_CLOCKS;
 
+#ifdef FSL_SDK_CPU_CORTEX_M
 /*! @brief Array to map IRQSTEER instance number to IRQ number. */
 static const IRQn_Type s_irqsteerIRQNumber[] = IRQSTEER_IRQS;
+#endif /* FSL_SDK_CPU_CORTEX_M */
 
 /*******************************************************************************
  * Code
@@ -84,11 +86,13 @@ void IRQSTEER_Init(IRQSTEER_Type *base)
     {
         base->CHn_MASK[i] &= ~IRQSTEER_CHn_MASK_MASKFLD_MASK;
     }
+#ifdef FSL_SDK_CPU_CORTEX_M
     /* Enable NVIC vectors for all IRQSTEER master. */
     for (i = 0; i < (uint32_t)FSL_FEATURE_IRQSTEER_MASTER_COUNT; i++)
     {
         (void)EnableIRQ(s_irqsteerIRQNumber[i]);
     }
+#endif /* FSL_SDK_CPU_CORTEX_M */
 }
 
 /*!
@@ -100,16 +104,22 @@ void IRQSTEER_Init(IRQSTEER_Type *base)
  */
 void IRQSTEER_Deinit(IRQSTEER_Type *base)
 {
+#ifdef FSL_SDK_CPU_CORTEX_M
     uint32_t master;
+#endif /* FSL_SDK_CPU_CORTEX_M */
+
 #if !(defined(FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL) && FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL)
     /* Disable clock. */
     (void)CLOCK_DisableClock(s_irqsteerClockName[IRQSTEER_GetInstance(base)]);
 #endif
+
+#ifdef FSL_SDK_CPU_CORTEX_M
     /* Disable NVIC vectors for all IRQSTEER master. */
     for (master = 0; master < (uint32_t)FSL_FEATURE_IRQSTEER_MASTER_COUNT; master++)
     {
         (void)DisableIRQ(s_irqsteerIRQNumber[master]);
     }
+#endif
 }
 
 /*!
@@ -145,6 +155,7 @@ IRQn_Type IRQSTEER_GetMasterNextInterrupt(IRQSTEER_Type *base, irqsteer_int_mast
     }
 }
 
+#ifdef FSL_SDK_CPU_CORTEX_M
 static void IRQSTEER_CommonIRQHandler(IRQSTEER_Type *base, irqsteer_int_master_t intMasterIndex)
 {
     IRQn_Type intSource;
@@ -218,3 +229,4 @@ void IRQSTEER_7_DriverIRQHandler(void)
 {
     IRQSTEER_CommonIRQHandler(IRQSTEER, kIRQSTEER_InterruptMaster7);
 }
+#endif /* FSL_SDK_CPU_CORTEX_M */
