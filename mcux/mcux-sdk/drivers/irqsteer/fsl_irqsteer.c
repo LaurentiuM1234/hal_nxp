@@ -21,6 +21,7 @@
  * Prototypes
  ******************************************************************************/
 
+#if !(defined(FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL) && FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL)
 /*!
  * @brief Get instance number for IRQSTEER.
  *
@@ -35,10 +36,8 @@ static uint32_t IRQSTEER_GetInstance(IRQSTEER_Type *base);
 /*! @brief Array to map IRQSTEER instance number to base pointer. */
 static IRQSTEER_Type *const s_irqsteerBases[] = IRQSTEER_BASE_PTRS;
 
-#if !(defined(FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL) && FSL_SDK_DISABLE_DRIVER_CLOCK_CONTROL)
 /*! @brief Array to map IRQSTEER instance number to clock name. */
 static const clock_ip_name_t s_irqsteerClockName[] = IRQSTEER_CLOCKS;
-#endif
 
 /*! @brief Array to map IRQSTEER instance number to IRQ number. */
 static const IRQn_Type s_irqsteerIRQNumber[] = IRQSTEER_IRQS;
@@ -64,6 +63,7 @@ static uint32_t IRQSTEER_GetInstance(IRQSTEER_Type *base)
 
     return instance;
 }
+#endif
 
 /*!
  * brief Initializes the IRQSTEER module.
