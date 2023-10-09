@@ -125,6 +125,22 @@ static inline void IRQSTEER_EnableInterrupt(IRQSTEER_Type *base, IRQn_Type irq)
 }
 
 /*!
+ * @brief Check if an interrupt is enabled.
+ *
+ * @param base IRQSTEER peripheral base address.
+ * @param irq Interrupt to be checked.
+ *
+ * @return true if the interrupt is enabled, false otherwise.
+ */
+static inline bool IRQSTEER_IsInterruptEnabled(IRQSTEER_Type *base, IRQn_Type irq)
+{
+    assert((uint32_t)irq >= (uint32_t)FSL_FEATURE_IRQSTEER_IRQ_START_INDEX);
+
+    return base->CHn_MASK[((uint32_t)IRQSTEER_INT_SRC_REG_INDEX(((uint32_t)irq)))] &
+	    (1UL << ((uint32_t)IRQSTEER_INT_SRC_BIT_OFFSET(((uint32_t)irq))));
+}
+
+/*!
  * @brief Disables an interrupt source.
  *
  * @param base IRQSTEER peripheral base address.
@@ -251,6 +267,22 @@ static inline bool IRQSTEER_IsMasterInterruptSet(IRQSTEER_Type *base)
 static inline uint32_t IRQSTEER_GetGroupInterruptStatus(IRQSTEER_Type *base, irqsteer_int_group_t intGroupIndex)
 {
     return (base->CHn_STATUS[intGroupIndex]);
+}
+
+/*!
+ * @brief Gets the number of interrupts aggregated by given master.
+ *
+ * @param base IRQSTEER peripheral base address.
+ * @param intMasterIndex Master index of interrupt sources, options available in enumeration ::irqsteer_int_master_t.
+ * @return Number of interrupts aggregated by given master.
+ */
+static inline uint32_t IRQSTEER_GetMasterIrqCount(IRQSTEER_Type *base, irqsteer_int_master_t intMasterIndex)
+{
+    if (!(FSL_FEATURE_IRQSTEER_IRQ_NUM % FSL_FEATURE_IRQSTEER_MASTER_IRQ_NUM) && !intMasterIndex) {
+        return FSL_FEATURE_IRQSTEER_IRQ_NUM % FSL_FEATURE_IRQSTEER_MASTER_IRQ_NUM;
+    } else {
+        return FSL_FEATURE_IRQSTEER_MASTER_IRQ_NUM;
+    }
 }
 
 /*!
