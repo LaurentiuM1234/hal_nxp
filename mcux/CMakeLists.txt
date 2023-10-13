@@ -71,6 +71,7 @@ zephyr_compile_definitions(${MCUX_CPU})
 # practice, drilling down like this avoids the need for repetitive
 # build scripts for every mcux device.
 zephyr_library_sources(mcux-sdk/devices/${MCUX_DEVICE}/drivers/fsl_clock.c)
+zephyr_library_sources_ifdef(CONFIG_DMA_NXP_EDMA mcux-sdk/devices/${MCUX_DEVICE}/drivers/fsl_edma.c)
 if (${MCUX_DEVICE} MATCHES "LPC|MIMXRT6|MIMXRT5")
   zephyr_library_sources(mcux-sdk/devices/${MCUX_DEVICE}/drivers/fsl_power.c)
   zephyr_library_sources(mcux-sdk/devices/${MCUX_DEVICE}/drivers/fsl_reset.c)

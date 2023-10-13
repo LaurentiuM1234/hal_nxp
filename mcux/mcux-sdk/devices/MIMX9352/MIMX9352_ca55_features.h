@@ -184,7 +184,7 @@
 /* @brief Has no register bit fields MP_CSR[EBW]. */
 #define FSL_FEATURE_EDMA_HAS_NO_MP_CSR_EBW (1)
 /* @brief If dma has channel mux */
-#define FSL_FEATURE_EDMA_HAS_CHANNEL_MUX (0)
+#define FSL_FEATURE_EDMA_HAS_CHANNEL_MUX (1)
 /* @brief If dma has common clock gate */
 #define FSL_FEATURE_EDMA_HAS_COMMON_CLOCK_GATE (0)
 /* @brief If dma channel IRQ support parameter */
@@ -433,6 +433,28 @@
     (((x) == SAI1) ? (2) : \
     (((x) == SAI2) ? (4) : \
     (((x) == SAI3) ? (1) : (-1))))
+
+#define FSL_FEATURE_SAI_TX_FIFO_BASEn(x, n) \
+    (((x) == SAI1) ? ((uint32_t)SAI1 + 0x20 + (n) * 0x4) : \
+    (((x) == SAI2) ? ((uint32_t)SAI2 + 0x20 + (n) * 0x4) : \
+    (((x) == SAI3) ? ((uint32_t)SAI3 + 0x20 + (n) * 0x4) : (NULL))))
+
+#define FSL_FEATURE_SAI_RX_FIFO_BASEn(x, n) \
+    (((x) == SAI1) ? ((uint32_t)SAI1 + 0xa0 + (n) * 0x4) : \
+    (((x) == SAI2) ? ((uint32_t)SAI2 + 0xa0 + (n) * 0x4) : \
+    (((x) == SAI3) ? ((uint32_t)SAI3 + 0xa0 + (n) * 0x4) : (NULL))))
+
+#define FSL_FEATURE_SAI_TX_DMA_MUXn(x) \
+    (((x) == SAI1) ? (21) : \
+    (((x) == SAI2) ? (58) : \
+    (((x) == SAI3) ? (60) : (0))))
+
+#define FSL_FEATURE_SAI_RX_DMA_MUXn(x) \
+    (((x) == SAI1) ? (22) : \
+    (((x) == SAI2) ? (59) : \
+    (((x) == SAI3) ? (61) : (0))))
+
+
 /* @brief Maximum words per frame (register bit fields TCR3[WDFL], TCR4[FRSZ], TMR[TWM], RCR3[WDFL], RCR4[FRSZ], RMR[RWM]). */
 #define FSL_FEATURE_SAI_MAX_WORDS_PER_FRAME (32)
 /* @brief Has support of combining multiple data channel FIFOs into single channel FIFO (register bit fields TCR3[CFR], TCR4[FCOMB], TFR0[WCP], TFR1[WCP], RCR3[CFR], RCR4[FCOMB], RFR0[RCP], RFR1[RCP]). */

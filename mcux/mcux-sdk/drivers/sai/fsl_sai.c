@@ -1228,7 +1228,7 @@ void SAI_TxSetFifoConfig(I2S_Type *base, sai_fifo_t *config)
 {
     assert(config != NULL);
 #if defined(FSL_FEATURE_SAI_HAS_FIFO) && (FSL_FEATURE_SAI_HAS_FIFO)
-    if ((config->fifoWatermark == 0U) ||
+    if (
         (config->fifoWatermark > (uint8_t)((uint32_t)FSL_FEATURE_SAI_FIFO_COUNTn(base))))
     {
         config->fifoWatermark = (uint8_t)((uint32_t)FSL_FEATURE_SAI_FIFO_COUNTn(base) / 2U);
@@ -1274,7 +1274,7 @@ void SAI_RxSetFifoConfig(I2S_Type *base, sai_fifo_t *config)
 {
     assert(config != NULL);
 #if defined(FSL_FEATURE_SAI_HAS_FIFO) && (FSL_FEATURE_SAI_HAS_FIFO)
-    if ((config->fifoWatermark == 0U) ||
+    if (
         (config->fifoWatermark > (uint8_t)((uint32_t)FSL_FEATURE_SAI_FIFO_COUNTn(base))))
     {
         config->fifoWatermark = (uint8_t)((uint32_t)FSL_FEATURE_SAI_FIFO_COUNTn(base) / 2U);
@@ -1444,7 +1444,7 @@ void SAI_TxSetConfig(I2S_Type *base, sai_transceiver_t *config)
         config->channelMask = 1U << config->startChannel;
     }
 
-    for (i = 0U; i < (uint32_t)FSL_FEATURE_SAI_CHANNEL_COUNTn(base); i++)
+    for (i = 0U; i < FSL_FEATURE_SAI_CHANNEL_COUNTn(base); i++)
     {
         if (IS_SAI_FLAG_SET(1UL << i, config->channelMask))
         {
@@ -1578,7 +1578,7 @@ void SAI_RxSetConfig(I2S_Type *base, sai_transceiver_t *config)
         config->channelMask = 1U << config->startChannel;
     }
 
-    for (i = 0U; i < (uint32_t)FSL_FEATURE_SAI_CHANNEL_COUNTn(base); i++)
+    for (i = 0U; i < FSL_FEATURE_SAI_CHANNEL_COUNTn(base); i++)
     {
         if (IS_SAI_FLAG_SET((1UL << i), config->channelMask))
         {

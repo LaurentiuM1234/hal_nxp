@@ -551,7 +551,7 @@
 #define FSL_FEATURE_TSTMR_CLOCK_FREQUENCY_1MHZ (0)
 
 /* @brief Memory map has offset between subsystems */
-#define FSL_FEATURE_MEMORY_HAS_ADDRESS_OFFSET (1)
+#define FSL_FEATURE_MEMORY_HAS_ADDRESS_OFFSET (0)
 
 /* MIPI DSI module features */
 /* @brief Offset between MIPI DSI controller and CSR in the MIPI DSI subsystem. */
