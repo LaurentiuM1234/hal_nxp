@@ -1439,11 +1439,6 @@ void SAI_TxSetConfig(I2S_Type *base, sai_transceiver_t *config)
 
     /* if channel mask is not set, then format->channel must be set,
      use it to get channel mask value */
-    if (config->channelMask == 0U)
-    {
-        config->channelMask = 1U << config->startChannel;
-    }
-
     for (i = 0U; i < FSL_FEATURE_SAI_CHANNEL_COUNTn(base); i++)
     {
         if (IS_SAI_FLAG_SET(1UL << i, config->channelMask))
@@ -1453,7 +1448,7 @@ void SAI_TxSetConfig(I2S_Type *base, sai_transceiver_t *config)
         }
     }
 
-    for (i = 0U; i < (uint32_t)FSL_FEATURE_SAI_CHANNEL_COUNTn(base); i++)
+    for (i = 0U; i < FSL_FEATURE_SAI_CHANNEL_COUNTn(base); i++)
     {
         if (IS_SAI_FLAG_SET((1UL << i), config->channelMask))
         {
@@ -1573,10 +1568,6 @@ void SAI_RxSetConfig(I2S_Type *base, sai_transceiver_t *config)
 
     /* if channel mask is not set, then format->channel must be set,
      use it to get channel mask value */
-    if (config->channelMask == 0U)
-    {
-        config->channelMask = 1U << config->startChannel;
-    }
 
     for (i = 0U; i < FSL_FEATURE_SAI_CHANNEL_COUNTn(base); i++)
     {
@@ -1587,7 +1578,7 @@ void SAI_RxSetConfig(I2S_Type *base, sai_transceiver_t *config)
         }
     }
 
-    for (i = 0U; i < (uint32_t)FSL_FEATURE_SAI_CHANNEL_COUNTn(base); i++)
+    for (i = 0U; i < FSL_FEATURE_SAI_CHANNEL_COUNTn(base); i++)
     {
         if (IS_SAI_FLAG_SET((1UL << i), config->channelMask))
         {
