@@ -165,6 +165,8 @@
     {                         \
         kCLOCK_M4_1_Irqsteer, \
     }
+#else
+#define IRQSTEER_CLOCKS {}
 #endif
 
 /*! @brief Clock ip name array for EDMA. */
